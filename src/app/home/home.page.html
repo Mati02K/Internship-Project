@@ -1,0 +1,83 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="warning">
+    <ion-avatar slot="start">
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </ion-avatar>
+    <ion-title><b>
+      NUTRIBUY
+    </b>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openCart()">
+        <ion-badge *ngIf="cart.length > 0">{{ cart.length }}</ion-badge>
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="light">
+  <!-- Displaying Banner AD -->
+  <ion-slides pager="true">
+    <ion-slide class="step-one">
+      <!-- Accesing the images in Assets Folder -->
+      <ion-img src='/assets/fruits.jpg'></ion-img>
+    
+      <h1 style="color:brown;font-family:Arial, Helvetica, sans-serif;font-size:50px;"><b>Fresh Fruits</b></h1>
+      <p style="color:green;font-family:cursive;font-size:20px;">Our Fruits are now at even more affordable price</p>
+     
+    </ion-slide>
+
+    <ion-slide class="step-two">
+      <ion-img src='/assets/vegetables.jpg'></ion-img>
+      <h1 style="color:brown;font-family:Arial, Helvetica, sans-serif;font-size:60px;"><b>Organic Vegetables</b></h1>
+      <p style="color:green;font-family:cursive;font-size:20px;">100% Organic, 0% Chemicals</p>
+      
+    </ion-slide>
+
+    <ion-slide class="step-three">
+      <ion-img src='/assets/farm.jpg'></ion-img>
+      <h1 style="color:brown;font-family:Arial, Helvetica, sans-serif;font-size:50px;"><b>Straight From The Farm</b></h1>
+      <p style="color:green;font-family:cursive;font-size:20px;">We never let expired products reach you...</p>
+    </ion-slide>
+
+    <ion-slide class="step-four">
+      <ion-img src='/assets/logi.png'></ion-img>
+      
+      <h1 style="color:brown;font-family:Arial, Helvetica, sans-serif;font-size:50px;"><b>Login/SignUp</b></h1>
+      <p style="color:green;font-family:cursive;font-size:20px;">Click on the button to continue and be part of a Fantastic Community</p>
+      <ion-button color="secondary" (click)="proceed()">Enter the Community!!!</ion-button>
+    </ion-slide>
+  </ion-slides>
+  
+  <ion-label><h1 style="color:black;font-family:'Times New Roman', Times, serif, Helvetica, sans-serif;font-size:30px;"><b>Quick Buy</b></h1></ion-label>
+  
+  <div *ngFor="let cat of items" class="category-block">
+ 
+    <ion-row no-padding class="category-banner">
+      <ion-col text-left button tappable (click)="cat.expanded = !cat.expanded" align-self-center>
+        {{ cat.category }}
+      </ion-col>
+    </ion-row>
+ <!-- Getting the Products from TS files -->
+    <ion-slides [options]="sliderConfig">
+      <ion-slide *ngFor="let product of cat.products">
+        <div *ngIf="cat.expanded">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>
+                {{ product.name }} - ${{ product.price }}
+              </ion-card-title>
+              <ion-card-content>
+                <ion-img [src]="product.imageUrl"></ion-img>
+                <ion-button expand="full" (click)="addToCart(product)">Add to Cart</ion-button>
+              </ion-card-content>
+            </ion-card-header>
+          </ion-card>
+        </div>
+      </ion-slide>
+    </ion-slides>
+ 
+  </div>
+ 
+</ion-content>
